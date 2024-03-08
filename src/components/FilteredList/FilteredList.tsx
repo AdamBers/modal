@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
+import CloseIcon from "@mui/icons-material/Close";
 import { IFilteredListProps } from "./types";
 
 const FilteredList: React.FC<IFilteredListProps> = (props) => {
@@ -29,7 +30,7 @@ const FilteredList: React.FC<IFilteredListProps> = (props) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+        <TableHead sx={{ paddingX: 5 }}>
           <TableRow>
             <TableCell>
               <Checkbox />
@@ -39,7 +40,7 @@ const FilteredList: React.FC<IFilteredListProps> = (props) => {
             <TableCell align="left"></TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ paddingX: 5 }}>
           {filtered.map((item, index) => {
             return (
               <TableRow key={index}>
@@ -54,9 +55,13 @@ const FilteredList: React.FC<IFilteredListProps> = (props) => {
                       label={element.name}
                       onClick={handleClick}
                       onDelete={handleDelete}
+                      deleteIcon={<CloseIcon />}
+                      variant="outlined"
+                      sx={{ mr: 1, borderRadius: "3px" }}
                     />
                   ))}
                 </TableCell>
+                <TableCell>...</TableCell>
               </TableRow>
             );
           })}

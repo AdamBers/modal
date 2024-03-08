@@ -2,6 +2,7 @@ import "./App.css";
 import Characteristics from "./components/Characteristics/Characteristics";
 import { IDataCategory } from "./components/FilteredList/types";
 
+
 function App() {
   const data: IDataCategory[] = [
     {

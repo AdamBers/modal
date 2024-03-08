@@ -2,7 +2,23 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Source Sans Pro, Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  text-decoration: none;
 }
 body {
   background-color: #f9fafb;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+thead,
+th {
+  font-size: 18px;
+  font-weight: bold !important;
+  color: #47596b !important;
 }

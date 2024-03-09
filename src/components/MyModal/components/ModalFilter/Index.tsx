@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
@@ -6,16 +6,28 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
-import CheckBox from "@mui/icons-material/CheckBox";
+import Checkbox from "@mui/material/Checkbox";
 import { FormGroup } from "@mui/material";
-import { IModalFilterProps } from "./types";
+import { IModalFilterProps, IDataCategory } from "./types";
 import { ChangeEvent } from "react";
 
 const ModalFilter: React.FC<IModalFilterProps> = ({
   elements,
   setElements,
 }) => {
-  const [activeCategory, setActiveCategory] = useState<any>(null);
+  const [activeCategory, setActiveCategory] = useState<IDataCategory | null>(
+    null
+  );
+
+  const items = useMemo(() => {
+    if (activeCategory && elements) {
+      const findEl = elements.find((el) => el.name === activeCategory.name)
+
+      return findEl?.items || []
+    }
+
+    return []
+  },[elements, activeCategory])
 
   const handleChangeGroup = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
@@ -25,7 +37,40 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
     if (findedEl) {
       setActiveCategory(findedEl);
     }
-  }, []);
+  }, [elements]);
+
+  const handleChangeElements = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const target = e.target;
+      const value = target.value;
+
+      if (activeCategory && elements && setElements) {
+        const newElements = elements?.map((el) => {
+          if (el.name === activeCategory.name) {
+            return {
+              ...el,
+              items:
+                el?.items?.map((item) => {
+                  if (item.id === Number(value)) {
+                    return {
+                      ...item,
+                      checked: !item.checked,
+                    };
+                  }
+
+                  return item;
+                }) || null,
+            };
+          }
+
+          return el;
+        });
+
+        setElements(newElements);
+      }
+    },
+    [elements, activeCategory, setElements]
+  );
 
   return (
     <Box
@@ -67,7 +112,6 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
                               <FolderOpenIcon sx={{ color: "#1976d2" }} />
                             }
                             value={el.name}
-                            
                           />
                         }
                         label={el.name}
@@ -81,14 +125,18 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
         </Box>
 
         <Box sx={{ display: "flex" }}>
-          <FormGroup>
-            {activeCategory && activeCategory.items &&
-              activeCategory.items.map((el, index) => {
+          <FormGroup onChange={handleChangeElements}>
+            {items.map((el, index) => {
                 return (
                   <FormControlLabel
                     key={index}
-                    control={<CheckBox />}
+                    value={el.id}
+                    control={<Checkbox checked={el.checked} />}
                     label={el.name}
+                    disabled={false}
+                    sx={{
+                      marginLeft: 0,
+                    }}
                   />
                 );
               })}

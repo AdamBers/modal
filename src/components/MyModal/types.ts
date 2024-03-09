@@ -13,5 +13,5 @@ export interface IDataCategory {
 
 export interface IMyModalProps {
   elements?: Array<IDataCategory>;
-  setElements: Dispatch<SetStateAction<IDataCategory[] | undefined>>;
+  setElements?: Dispatch<SetStateAction<IDataCategory[] | undefined>>;
 }

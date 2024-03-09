@@ -11,18 +11,21 @@ import NiceModal from "@ebay/nice-modal-react";
 import { useContext } from "react";
 import { DataContext } from "../../context";
 import MyModal from "../MyModal/Index";
+import { useModal } from "@ebay/nice-modal-react";
 
 const Characteristics: React.FC = () => {
   const context = useContext(DataContext);
+  const modal = useModal("my-modal");
 
   const elements = context.data;
 
-  const showModal = () => {
-    NiceModal.show(MyModal, {
-      elements: context.data,
-      setElements: context.setData,
-    }).then(() => {});
-  };
+  // const showModal = () => {
+  //   NiceModal.show(MyModal, {
+  //     elements: context.data,
+  //     setElements: context.setData,
+  //   }).then(() => {});
+  // };
+
   return (
     <Container
       component="section"
@@ -82,14 +85,22 @@ const Characteristics: React.FC = () => {
           variant="outlined"
           size="small"
           onClick={() => {
-            showModal();
+            // showModal();
+            modal.show();
           }}
           sx={{ fontSize: "12px", lineHeight: "26px" }}
         >
           Configure property
         </Button>
       </Box>
+
       <FilteredList elements={elements} />
+
+      <MyModal
+        id="my-modal"
+        setElements={context.setData}
+        elements={context.data}
+      />
     </Container>
   );
 };

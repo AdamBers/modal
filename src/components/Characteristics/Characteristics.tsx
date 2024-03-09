@@ -7,15 +7,22 @@ import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import FilteredList from "../FilteredList/FilteredList";
-import { ICharacteristicsProps } from "./types";
 import NiceModal from "@ebay/nice-modal-react";
-import MyModal from "../Modal/MyModal";
+import { useContext } from "react";
+import { DataContext } from "../../context";
+import MyModal from "../MyModal/Index";
 
-const showModal = () => {
-  NiceModal.show(MyModal, {}).then(() => {});
-};
+const Characteristics: React.FC = () => {
+  const context = useContext(DataContext);
 
-const Characteristics: React.FC<ICharacteristicsProps> = ({ elements }) => {
+  const elements = context.data;
+
+  const showModal = () => {
+    NiceModal.show(MyModal, {
+      elements: context.data,
+      setElements: context.setData,
+    }).then(() => {});
+  };
   return (
     <Container
       component="section"

@@ -1,3 +1,5 @@
+import { SetStateAction, Dispatch } from "react";
+
 export interface IItems {
   id: number;
   name: string;
@@ -9,6 +11,7 @@ export interface IDataCategory {
   items: IItems[] | null;
 }
 
-export interface IFilteredListProps {
+export interface IMyModalProps {
   elements?: Array<IDataCategory>;
+  setElements: Dispatch<SetStateAction<IDataCategory[] | undefined>>;
 }

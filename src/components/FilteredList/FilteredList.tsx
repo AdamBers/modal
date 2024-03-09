@@ -13,7 +13,7 @@ import { IFilteredListProps } from "./types";
 
 const FilteredList: React.FC<IFilteredListProps> = (props) => {
   const { elements } = props;
-  const filtered = elements.map((item) => {
+  const filtered = elements?.map((item) => {
     return {
       ...item,
       items: item.items?.filter((el) => el.checked),
@@ -41,30 +41,31 @@ const FilteredList: React.FC<IFilteredListProps> = (props) => {
           </TableRow>
         </TableHead>
         <TableBody sx={{ paddingX: 5 }}>
-          {filtered.map((item, index) => {
-            return (
-              <TableRow key={index}>
-                <TableCell>
-                  <Checkbox />
-                </TableCell>
-                <TableCell>{item.name}</TableCell>
-                <TableCell>
-                  {item.items?.map((element) => (
-                    <Chip
-                      key={element.id}
-                      label={element.name}
-                      onClick={handleClick}
-                      onDelete={handleDelete}
-                      deleteIcon={<CloseIcon />}
-                      variant="outlined"
-                      sx={{ mr: 1, borderRadius: "3px" }}
-                    />
-                  ))}
-                </TableCell>
-                <TableCell>...</TableCell>
-              </TableRow>
-            );
-          })}
+          {filtered &&
+            filtered.map((item, index) => {
+              return (
+                <TableRow key={index}>
+                  <TableCell>
+                    <Checkbox />
+                  </TableCell>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>
+                    {item.items?.map((element) => (
+                      <Chip
+                        key={element.id}
+                        label={element.name}
+                        onClick={handleClick}
+                        onDelete={handleDelete}
+                        deleteIcon={<CloseIcon />}
+                        variant="outlined"
+                        sx={{ mr: 1, borderRadius: "3px" }}
+                      />
+                    ))}
+                  </TableCell>
+                  <TableCell>...</TableCell>
+                </TableRow>
+              );
+            })}
         </TableBody>
       </Table>
     </TableContainer>

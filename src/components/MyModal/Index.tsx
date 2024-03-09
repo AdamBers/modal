@@ -7,10 +7,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
-import ModalFilter from "./ModalFilter/ModalFilter";
+import ModalFilter from "./components/ModalFilter/ModalFilter";
+import { IMyModalProps } from "./types";
 
 const style = {
   position: "absolute" as "absolute",
+  display: "flex",
+  flexDirection: "column",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
@@ -25,7 +28,8 @@ const style = {
     "0 1px 1px rgba(0,0,0,.08), 0 2px 1px rgba(0,0,0,.06), 0 1px 3px rgba(0,0,0,.1)",
 };
 
-const MyModal = NiceModal.create(() => {
+const MyModal = NiceModal.create((props: IMyModalProps) => {
+  const { elements } = props;
   const modal = useModal();
   return (
     <Modal open={modal.visible} onClose={() => modal.hide()}>
@@ -72,7 +76,7 @@ const MyModal = NiceModal.create(() => {
             }}
           />
         </Box>
-        <ModalFilter />
+        <ModalFilter elements={elements} />
       </Box>
     </Modal>
   );

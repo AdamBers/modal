@@ -7,7 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
-import ModalFilter from "./components/ModalFilter/ModalFilter";
+import ModalFilter from "./components/ModalFilter/Index";
 import { IMyModalProps } from "./types";
 
 const style = {
@@ -29,7 +29,8 @@ const style = {
 };
 
 const MyModal = NiceModal.create((props: IMyModalProps) => {
-  const { elements } = props;
+  const { elements, setElements } = props;
+
   const modal = useModal();
   return (
     <Modal open={modal.visible} onClose={() => modal.hide()}>
@@ -76,7 +77,7 @@ const MyModal = NiceModal.create((props: IMyModalProps) => {
             }}
           />
         </Box>
-        <ModalFilter elements={elements} />
+        <ModalFilter elements={elements} setElements={setElements} />
       </Box>
     </Modal>
   );

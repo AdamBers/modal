@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
@@ -7,10 +7,26 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControl from "@mui/material/FormControl";
 import CheckBox from "@mui/icons-material/CheckBox";
-import { IModalFilterProps } from "./types";
 import { FormGroup } from "@mui/material";
+import { IModalFilterProps } from "./types";
+import { ChangeEvent } from "react";
 
-const ModalFilter: React.FC<IModalFilterProps> = ({ elements }) => {
+const ModalFilter: React.FC<IModalFilterProps> = ({
+  elements,
+  setElements,
+}) => {
+  const [activeCategory, setActiveCategory] = useState<any>(null);
+
+  const handleChangeGroup = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const target = e.target;
+    const value = target.value;
+
+    const findedEl = elements?.find((el) => el.name === value);
+    if (findedEl) {
+      setActiveCategory(findedEl);
+    }
+  }, []);
+
   return (
     <Box
       sx={{
@@ -28,54 +44,50 @@ const ModalFilter: React.FC<IModalFilterProps> = ({ elements }) => {
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
+              onChange={handleChangeGroup}
             >
               {elements &&
                 elements.map((el, index) => {
                   return (
-                    <FormControlLabel
+                    <Box
                       key={index}
-                      value={el.name}
-                      control={
-                        <Radio
-                          icon={<FolderOpenIcon sx={{ color: "#1976d2" }} />}
-                          checkedIcon={
-                            <FolderOpenIcon sx={{ color: "#1976d2" }} />
-                          }
-                          sx={{
-                            "&.Mui-checked": {
-                              "&, & + .MuiFormControlLabel-label": {
-                                // backgroundColor: "red",
-                                fontWeight: "bold",
-                              },
-                            },
-                          }}
-                        />
-                      }
-                      label={el.name}
-                      sx={{ marginLeft: "0", margiRight: "0" }}
-                    />
+                      sx={{
+                        backgroundColor:
+                          el.name === activeCategory?.name
+                            ? "gray"
+                            : "transparent",
+                      }}
+                    >
+                      <FormControlLabel
+                        value={el.name}
+                        control={
+                          <Radio
+                            icon={<FolderOpenIcon sx={{ color: "#1976d2" }} />}
+                            checkedIcon={
+                              <FolderOpenIcon sx={{ color: "#1976d2" }} />
+                            }
+                            value={el.name}
+                            
+                          />
+                        }
+                        label={el.name}
+                        sx={{ marginLeft: "0", margiRight: "0" }}
+                      />
+                    </Box>
                   );
                 })}
             </RadioGroup>
           </FormControl>
         </Box>
+
         <Box sx={{ display: "flex" }}>
           <FormGroup>
-            {elements &&
-              elements.map((el, index) => {
+            {activeCategory && activeCategory.items &&
+              activeCategory.items.map((el, index) => {
                 return (
                   <FormControlLabel
                     key={index}
-                    control={
-                      <CheckBox
-                        icon={
-                          <FolderOpenIcon sx={{ mr: 1, color: "#1976d2" }} />
-                        }
-                        checkedIcon={
-                          <FolderOpenIcon sx={{ mr: 1, color: "#1976d2" }} />
-                        }
-                      />
-                    }
+                    control={<CheckBox />}
                     label={el.name}
                   />
                 );

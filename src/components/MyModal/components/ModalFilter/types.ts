@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface IItems {
   id: number;
   name: string;
@@ -11,6 +13,7 @@ export interface IDataCategory {
 
 export interface IModalFilterProps {
   elements?: Array<IDataCategory>;
+  setElements?: Dispatch<SetStateAction<Array<IDataCategory> | undefined>>;
 }
 
 // {elements &&
@@ -78,3 +81,13 @@ export interface IModalFilterProps {
 //     </FormControl>
 //   );
 // })}
+
+
+// sx={{
+                            //   "&.Mui-checked": {
+                            //     "&, & + .MuiFormControlLabel-label": {
+                            //       backgroundColor: "red",
+                            //       fontWeight: "bold",
+                            //     },
+                            //   },
+                            // }}

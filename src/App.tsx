@@ -1,4 +1,4 @@
-import Characteristics from "./components/Characteristics/Characteristics";
+import Characteristics from "./components/Characteristics/Index";
 import { useState, useMemo } from "react";
 import { data as mock } from "./data";
 import { DataContext } from "./context";

@@ -20,16 +20,25 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
     null
   );
 
+  const [newFilteredElements, setNewFilteredElements] = useState(elements);
+
   const modal = useModal();
+  const handleSubmit = () => {
+    setElements(newFilteredElements);
+    modal.hide();
+  };
   const items = useMemo(() => {
-    if (activeCategory && elements) {
-      const findEl = elements.find((el) => el.name === activeCategory.name);
+    if (activeCategory && newFilteredElements) {
+      const findEl = newFilteredElements.find(
+        (el) => el.name === activeCategory.name
+      );
       return findEl?.items || [];
     }
-    return [];
-  }, [elements, activeCategory]);
 
-  const handleChangeGroup = useCallback(
+    return [];
+  }, [newFilteredElements, activeCategory]);
+
+  const handleSelectGroup = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       const target = e.target;
       const value = target.value;
@@ -47,8 +56,8 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
       const target = e.target;
       const value = target.value;
 
-      if (activeCategory && elements && setElements) {
-        const newElements = elements?.map((el) => {
+      if (activeCategory && newFilteredElements && setElements) {
+        const newElements = newFilteredElements?.map((el) => {
           if (el.name === activeCategory.name) {
             return {
               ...el,
@@ -69,10 +78,10 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
           return el;
         });
 
-        setElements(newElements);
+        setNewFilteredElements(newElements);
       }
     },
-    [elements, activeCategory, setElements]
+    [newFilteredElements, activeCategory, setNewFilteredElements]
   );
 
   return (
@@ -92,7 +101,7 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
               name="radio-buttons-group"
-              onChange={handleChangeGroup}
+              onChange={handleSelectGroup}
             >
               {elements &&
                 elements.map((el, index) => {
@@ -156,7 +165,12 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
         >
           Cancel
         </Button>
-        <Button variant="contained" size="small" sx={{ mr: 2, px: 4 }}>
+        <Button
+          variant="contained"
+          size="small"
+          sx={{ mr: 2, px: 4 }}
+          onClick={handleSubmit}
+        >
           Save
         </Button>
       </Box>

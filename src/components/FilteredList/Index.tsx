@@ -13,12 +13,18 @@ import { IFilteredListProps } from "./types";
 
 const FilteredList: React.FC<IFilteredListProps> = (props) => {
   const { elements } = props;
-  const filtered = elements?.map((item) => {
-    return {
-      ...item,
-      items: item.items?.filter((el) => el.checked),
-    };
-  });
+  const filtered = elements
+    ?.map((item) => {
+      if (item?.items?.some((el) => el.checked)) {
+        return {
+          ...item,
+          items: item.items?.filter((el) => el.checked),
+        };
+      }
+      return;
+    })
+    .filter(Boolean);
+  console.log(filtered);
 
   const handleClick = () => {
     console.info("You clicked the Chip.");

@@ -7,7 +7,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import Button from "@mui/material/Button";
 import { Typography } from "@mui/material";
 import FilteredList from "../FilteredList/Index";
-import NiceModal from "@ebay/nice-modal-react";
 import { useContext } from "react";
 import { DataContext } from "../../context";
 import MyModal from "../MyModal/Index";

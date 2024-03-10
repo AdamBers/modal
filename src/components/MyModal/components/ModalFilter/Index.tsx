@@ -10,6 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { FormGroup } from "@mui/material";
 import { IModalFilterProps, IDataCategory } from "./types";
 import { ChangeEvent } from "react";
+import { useModal } from "@ebay/nice-modal-react";
 
 const ModalFilter: React.FC<IModalFilterProps> = ({
   elements,
@@ -19,25 +20,27 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
     null
   );
 
+  const modal = useModal();
   const items = useMemo(() => {
     if (activeCategory && elements) {
-      const findEl = elements.find((el) => el.name === activeCategory.name)
-
-      return findEl?.items || []
+      const findEl = elements.find((el) => el.name === activeCategory.name);
+      return findEl?.items || [];
     }
+    return [];
+  }, [elements, activeCategory]);
 
-    return []
-  },[elements, activeCategory])
+  const handleChangeGroup = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const target = e.target;
+      const value = target.value;
 
-  const handleChangeGroup = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const target = e.target;
-    const value = target.value;
-
-    const findedEl = elements?.find((el) => el.name === value);
-    if (findedEl) {
-      setActiveCategory(findedEl);
-    }
-  }, [elements]);
+      const findedEl = elements?.find((el) => el.name === value);
+      if (findedEl) {
+        setActiveCategory(findedEl);
+      }
+    },
+    [elements]
+  );
 
   const handleChangeElements = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +87,7 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
       }}
     >
       <Box sx={{ display: "flex" }}>
-        <Box sx={{ width: "50%", border: "1px solid green" }}>
+        <Box sx={{ width: "50%" }}>
           <FormControl sx={{ width: "100%" }}>
             <RadioGroup
               aria-labelledby="demo-radio-buttons-group-label"
@@ -99,7 +102,7 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
                       sx={{
                         backgroundColor:
                           el.name === activeCategory?.name
-                            ? "gray"
+                            ? "#e3f3ff"
                             : "transparent",
                       }}
                     >
@@ -127,25 +130,30 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
         <Box sx={{ display: "flex" }}>
           <FormGroup onChange={handleChangeElements}>
             {items.map((el, index) => {
-                return (
-                  <FormControlLabel
-                    key={index}
-                    value={el.id}
-                    control={<Checkbox checked={el.checked} />}
-                    label={el.name}
-                    disabled={false}
-                    sx={{
-                      marginLeft: 0,
-                    }}
-                  />
-                );
-              })}
+              return (
+                <FormControlLabel
+                  key={index}
+                  value={el.id}
+                  control={<Checkbox checked={el.checked} />}
+                  label={el.name}
+                  disabled={false}
+                  sx={{
+                    marginLeft: 0,
+                  }}
+                />
+              );
+            })}
           </FormGroup>
         </Box>
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-        <Button variant="outlined" size="small" sx={{ mr: 2, px: 4 }}>
+        <Button
+          variant="outlined"
+          size="small"
+          sx={{ mr: 2, px: 4 }}
+          onClick={() => modal.hide()}
+        >
           Cancel
         </Button>
         <Button variant="contained" size="small" sx={{ mr: 2, px: 4 }}>

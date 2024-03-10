@@ -3,7 +3,7 @@ export const data = [
     name: "Color",
     items: [
       { id: 1, name: "Red", checked: false },
-      { id: 2, name: "Green", checked: false },
+      { id: 2, name: "Green", checked: true },
       { id: 3, name: "Blue", checked: false },
     ],
   },
@@ -11,8 +11,8 @@ export const data = [
   {
     name: "Ingredients",
     items: [
-      { id: 1, name: "Fish", checked: false },
-      { id: 2, name: "Milk", checked: false },
+      { id: 1, name: "Fish", checked: true },
+      { id: 2, name: "Milk", checked: true },
       { id: 3, name: "Pepper", checked: false },
       { id: 4, name: "Sugar", checked: false },
     ],

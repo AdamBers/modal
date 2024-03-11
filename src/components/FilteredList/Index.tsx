@@ -24,7 +24,6 @@ const FilteredList: React.FC<IFilteredListProps> = (props) => {
       return;
     })
     .filter(Boolean);
-  console.log(filtered);
 
   const handleClick = () => {
     console.info("You clicked the Chip.");

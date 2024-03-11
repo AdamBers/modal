@@ -5,6 +5,7 @@ export interface IItems {
 }
 
 export interface IDataCategory {
+  id: number;
   name: string;
   items: IItems[] | null;
 }

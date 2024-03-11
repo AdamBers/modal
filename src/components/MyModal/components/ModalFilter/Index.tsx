@@ -24,7 +24,9 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
 
   const modal = useModal();
   const handleSubmit = () => {
-    setElements(newFilteredElements);
+    if (setElements) {
+      setElements(newFilteredElements);
+    }
     modal.hide();
   };
   const items = useMemo(() => {
@@ -43,7 +45,7 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
       const target = e.target;
       const value = target.value;
 
-      const findedEl = elements?.find((el) => el.name === value);
+      const findedEl = elements?.find((el) => String(el.id) === value);
       if (findedEl) {
         setActiveCategory(findedEl);
       }
@@ -58,7 +60,7 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
 
       if (activeCategory && newFilteredElements && setElements) {
         const newElements = newFilteredElements?.map((el) => {
-          if (el.name === activeCategory.name) {
+          if (el.id === activeCategory.id) {
             return {
               ...el,
               items:
@@ -116,14 +118,14 @@ const ModalFilter: React.FC<IModalFilterProps> = ({
                       }}
                     >
                       <FormControlLabel
-                        value={el.name}
+                        value={el.id}
                         control={
                           <Radio
                             icon={<FolderOpenIcon sx={{ color: "#1976d2" }} />}
                             checkedIcon={
                               <FolderOpenIcon sx={{ color: "#1976d2" }} />
                             }
-                            value={el.name}
+                            value={el.id}
                           />
                         }
                         label={el.name}

@@ -54,9 +54,9 @@ const FilteredList: React.FC<IFilteredListProps> = (props) => {
                   <TableCell>
                     <Checkbox />
                   </TableCell>
-                  <TableCell>{item.name}</TableCell>
+                  <TableCell>{item?.name}</TableCell>
                   <TableCell>
-                    {item.items?.map((element) => (
+                    {item?.items?.map((element) => (
                       <Chip
                         key={element.id}
                         label={element.name}

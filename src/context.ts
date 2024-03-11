@@ -7,6 +7,7 @@ interface IItems {
 }
 
 interface IDataCategory {
+  id: number;
   name: string;
   items: IItems[] | null;
 }

@@ -1,5 +1,6 @@
 export const data = [
   {
+    id: 1,
     name: "Color",
     items: [
       { id: 1, name: "Red", checked: false },
@@ -9,6 +10,7 @@ export const data = [
   },
 
   {
+    id: 2,
     name: "Ingredients",
     items: [
       { id: 1, name: "Fish", checked: true },
@@ -19,6 +21,7 @@ export const data = [
   },
 
   {
+    id: 3,
     name: "Material",
     items: [
       { id: 1, name: "Cotton", checked: false },

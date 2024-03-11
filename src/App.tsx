@@ -9,7 +9,7 @@ function App() {
   const [data, setData] = useState<IContext["data"]>(mock);
   const context = useMemo(() => {
     return { data, setData };
-  }, [data, setData])
+  }, [data, setData]);
 
   return (
     <DataContext.Provider value={context}>

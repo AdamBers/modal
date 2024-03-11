@@ -18,18 +18,10 @@ const Characteristics: React.FC = () => {
 
   const elements = context.data;
 
-  // const showModal = () => {
-  //   NiceModal.show(MyModal, {
-  //     elements: context.data,
-  //     setElements: context.setData,
-  //   }).then(() => {});
-  // };
-
   return (
     <Container
       component="section"
       sx={{
-        minHeight: "400px",
         borderRadius: "8px",
         maxHeight: "90vh",
         paddingLeft: "0px !important",
@@ -84,7 +76,6 @@ const Characteristics: React.FC = () => {
           variant="outlined"
           size="small"
           onClick={() => {
-            // showModal();
             modal.show();
           }}
           sx={{ fontSize: "12px", lineHeight: "26px" }}
@@ -93,7 +84,7 @@ const Characteristics: React.FC = () => {
         </Button>
       </Box>
 
-      <FilteredList elements={elements} />
+      <FilteredList elements={elements} setElements={context.setData} />
 
       <MyModal
         id="my-modal"

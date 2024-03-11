@@ -12,7 +12,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { IFilteredListProps } from "./types";
 
 const FilteredList: React.FC<IFilteredListProps> = (props) => {
-  const { elements } = props;
+  const { elements, setElements } = props;
   const filtered = elements
     ?.map((item) => {
       if (item?.items?.some((el) => el.checked)) {
@@ -30,8 +30,31 @@ const FilteredList: React.FC<IFilteredListProps> = (props) => {
     console.info("You clicked the Chip.");
   };
 
-  const handleDelete = () => {
-    console.info("You clicked the delete icon.");
+  const handleDelete = (cotegoryId: number, id: number): void => {
+    if (setElements) {
+      setElements((prevState) => {
+        return prevState?.map((element) => {
+          if (element.id === cotegoryId) {
+            return {
+              ...element,
+              items:
+                element.items?.map((item) => {
+                  if (item.id === id) {
+                    return {
+                      ...item,
+                      checked: false,
+                    };
+                  }
+
+                  return item;
+                }) || null,
+            };
+          }
+
+          return element;
+        });
+      });
+    }
   };
   return (
     <TableContainer component={Paper}>
@@ -61,7 +84,9 @@ const FilteredList: React.FC<IFilteredListProps> = (props) => {
                         key={element.id}
                         label={element.name}
                         onClick={handleClick}
-                        onDelete={handleDelete}
+                        onDelete={() => {
+                          handleDelete(item.id, element.id);
+                        }}
                         deleteIcon={<CloseIcon />}
                         variant="outlined"
                         sx={{ mr: 1, borderRadius: "3px" }}
